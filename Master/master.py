@@ -93,7 +93,8 @@ class Arquivo():
                 reprovados += 1
         
         perc  = (reprovados*100)/len(matri)
-        print('Percentual de alunos que reprovaram foi de: {}%'.format(perc))
+        print('Percentual de alunos que reprovaram foi de: {}%'
+              .format(perc))
 
     def matriculas():
 
@@ -112,7 +113,8 @@ class Arquivo():
         for linha in dados:
             try:
                 if matricula[linha[0]]:
-                    matricula[linha[0]].extend([float(linha[2]), float(linha[3])])
+                    matricula[linha[0]].extend([float(linha[2]),
+                                                float(linha[3])])
             except:
                 pass
             
@@ -122,29 +124,17 @@ class Arquivo():
 
         dic = Arquivo.matriculas()
 
-
         desistiu = 0
 
         for ii in dic:
-            periodo_maior_esq = dic[ii][1] > dic[ii][3]
-            grau_maior_esq = dic[ii][2]  > dic[ii][4]
-
-            periodo_maior_dir = dic[ii][1] < dic[ii][3]
-            grau_maior_dir = dic[ii][2]  < dic[ii][4]
-
-            if periodo_maior_esq:
-                if grau_maior_esq:
-                    pass
-                else:
-                    desistiu +=1
-            if periodo_maior_dir:
-                if grau_maior_dir:
-                    pass
-                else:
-                    
-                    desistiu +=1
             
-        
+            maior = max(dic[ii])
+            indice = dic[ii].index(maior)
+            if dic[ii][indice+1] < 5.0:
+                desistiu += 1
+            else:
+                pass
+                
         print('Alunos desistentes: {}'.format(desistiu))
 
     def grf_md_curso(self):
@@ -175,7 +165,6 @@ class Arquivo():
     def grf_md_pe(self):
         
         dados = Arquivo().quebrar_linhas()
-        
 
         peri = {}
 
@@ -190,12 +179,10 @@ class Arquivo():
             media = soma/md
             peri[nota] = round(media, 2)
 
-
         peri = sorted(peri.items(), key=itemgetter(0))
 
         perii = {}
 
-        
         for item in peri:
             perii[item[0]] = item[1]
 
@@ -206,13 +193,11 @@ class Arquivo():
         l = []
         for x,y in perii.items():
             plt.bar(x,y)
-            #z.append(y)
             w.append(x)
         for i in range(len(w)):
             l.append(i)
         plt.xticks(l, w, rotation='vertical')
         plt.subplots_adjust(bottom=0.20)
-        #plt.margins(0.2)
         plt.title('Gráfico por período')
         plt.ylabel('Grau')
         plt.xlabel('Períodos')
@@ -308,6 +293,7 @@ class Arquivo():
         ax.pie(tam, labels=None, startangle=90, autopct='%1.1f%%')
         ax.legend(label, title='Percentual de\nreprovações', loc=5,
                   bbox_to_anchor=(0.8,-0.5,0.5,1))
+        
         plt.title('Gráfico do total de reprovações')
         plt.savefig('reprovações_totais.png')
 
@@ -318,7 +304,6 @@ class Arquivo():
 
 
 a = Arquivo()
-a.media_grau()
 a.grau_por_curso()
 a.maior_grau_p()
 a.reprovados()
