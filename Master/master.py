@@ -299,8 +299,6 @@ class Arquivo():
         total_matr = len(total.keys())
         total_matr -= total_rep
 
-        print( total_rep, total_matr)
-
         label = ['Reprovações', 'Total de matrículas']
         tam = [total_rep,total_matr]
 
